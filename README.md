@@ -31,6 +31,16 @@ try {
 
 #### `const ERR = createError(code: string, message: string)`
 
+Creates a new nanoerror class.
+
+#### `err.isNanoerror -> boolean`
+
+Returns true if the err is a nanoerror instance.
+
+#### `ERR.equals(err) -> boolean`
+
+Returns true if the err belongs to a specific nanoerror class.
+
 ## <a name="issues"></a> Issues
 
 :bug: If you found an issue we encourage you to report it on [github](https://github.com/geut/nanoerror/issues). Please specify your OS and the actions to reproduce it.

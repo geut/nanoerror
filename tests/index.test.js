@@ -11,5 +11,7 @@ test('basic', () => {
     expect(err.name).toBe('BASIC_ERROR')
     expect(err.code).toBe('BASIC_ERROR')
     expect(err.message).toBe('Basic error with args: str {"json":true}')
+    expect(err.unformatMessage).toBe('Basic error with args: %s %j')
+    expect(BASIC_ERROR.equals(err))
   }
 })
