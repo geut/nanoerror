@@ -33,13 +33,17 @@ try {
 
 Creates a new nanoerror class.
 
-#### `err.isNanoerror -> boolean`
+#### `err.isNanoerror => boolean`
 
 Returns true if the err is a nanoerror instance.
 
-#### `ERR.equals(err) -> boolean`
+#### `ERR.equals(err) => boolean`
 
 Returns true if the err belongs to a specific nanoerror class.
+
+#### `ERR.from(err) => ERR`
+
+Creates an error based on the options of another one.
 
 ## <a name="issues"></a> Issues
 

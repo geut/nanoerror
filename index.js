@@ -2,27 +2,39 @@ const format = require('quick-format-unescaped')
 
 class Nanoerror extends Error {
   /**
+   * @readonly
+   * @static
+   * @returns {string}
+   */
+  static get code () {
+    return this.name
+  }
+
+  /**
    * @static
    * @param {Nanoerror} err
    * @returns {boolean}
    */
   static equals (err) {
-    return err && typeof err === 'object' && err.isNanoerror
+    return err && typeof err === 'object' && err.isNanoerror && err.code === this.code
   }
 
   /**
    * Creates a new Error
-   * @param {string} code
-   * @param {string} unformatMessage
-   * @param {Array<any>} [args]
+   * @param {...any} [args]
    */
-  constructor (code, unformatMessage, args = []) {
-    super(format(unformatMessage, args))
+  constructor (...args) {
+    super()
+
+    const code = this.constructor.code
+    const unformatMessage = this.constructor.message
 
     /** @type {string} */
+    this.message = format(unformatMessage, args)
+    /** @type {string} */
     this.name = code
-    /** @type {code} */
-    this.code = code
+    /** @type {string} */
+    this.code = this.name
     /** @type {Array<any>} */
     this.args = args
     /** @type {string} */
@@ -45,33 +57,38 @@ class Nanoerror extends Error {
 }
 
 /**
+ * @type {string}
+ * @static
+ * @memberof Nanoerror
+ */
+Nanoerror.message = ''
+
+/**
  * Creates a new Error class
  *
  * @param {string} code
  * @param {string} message
  */
 function createError (code, message = '%s') {
-  /**
-   * @mixin
-   */
-  return class extends Nanoerror {
-    /**
-     * @static
-     * @param {Nanoerror} err
-     * @returns {boolean}
-     */
-    static equals (err) {
-      return super.equals(err) && err.code === code
-    }
-
-    /**
-     * Creates a new Error
-     * @param {...any} [args]
-     */
-    constructor (...args) {
-      super(code, message, args)
+  const obj = {
+    [code]: class extends Nanoerror {
+      /**
+       * @static
+       * @param {Error} err
+       * @returns {Nanoerror}
+       */
+      static from (err) {
+        if (!(err instanceof Error)) throw new Error('invalid error instance')
+        const newErr = new obj[code](err.message)
+        newErr.stack = err.stack || newErr.stack
+        return newErr
+      }
     }
   }
+
+  obj[code].message = message
+
+  return obj[code]
 }
 
 module.exports = createError
