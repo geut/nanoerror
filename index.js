@@ -78,8 +78,7 @@ function createError (code, message = '%s') {
        * @returns {Nanoerror}
        */
       static from (err) {
-        if (!(err instanceof Error)) throw new Error('invalid error instance')
-        const newErr = new obj[code](err.message)
+        const newErr = new obj[code](`[${err.toString()}]`)
         newErr.stack = err.stack || newErr.stack
         return newErr
       }

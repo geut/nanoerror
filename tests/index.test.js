@@ -27,7 +27,7 @@ test('fromError', () => {
     expect(err).toBeInstanceOf(BASIC_ERROR)
     expect(err.name).toBe('BASIC_ERROR')
     expect(err.code).toBe('BASIC_ERROR')
-    expect(err.message).toBe('custom message')
+    expect(err.message).toBe('[Error: custom message]')
     expect(BASIC_ERROR.equals(err))
   }
 })
