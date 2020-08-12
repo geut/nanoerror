@@ -1,6 +1,6 @@
 {
   "name": "nanoerror",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Small module to create code errors with format support.",
   "main": "index.js",
   "files": [
