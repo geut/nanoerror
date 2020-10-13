@@ -11,12 +11,21 @@ class Nanoerror extends Error {
   }
 
   /**
+   * @readonly
+   * @static
+   * @returns {boolean}
+   */
+  static get isNanoerror () {
+    return true
+  }
+
+  /**
    * @static
    * @param {Nanoerror} err
    * @returns {boolean}
    */
   static equals (err) {
-    return err && typeof err === 'object' && err.isNanoerror && err.code === this.code
+    return err.isNanoerror && err.code === this.code
   }
 
   /**
@@ -26,6 +35,7 @@ class Nanoerror extends Error {
   constructor (...args) {
     super()
 
+    // get information from static props
     const code = this.constructor.code
     const unformatMessage = this.constructor.message
 
@@ -40,11 +50,7 @@ class Nanoerror extends Error {
     /** @type {string} */
     this.unformatMessage = unformatMessage
 
-    if (typeof Error.captureStackTrace === 'function') {
-      Error.captureStackTrace(this, this.constructor)
-    } else {
-      this.stack = (new Error(this.message)).stack
-    }
+    Error.captureStackTrace(this, this.constructor)
   }
 
   /**
@@ -53,6 +59,14 @@ class Nanoerror extends Error {
    */
   get isNanoerror () {
     return true
+  }
+
+  /**
+   * @param {Nanoerror} err
+   * @returns {boolean}
+   */
+  equals (err) {
+    return err.isNanoerror && err.code === this.code
   }
 }
 

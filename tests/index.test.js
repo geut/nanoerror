@@ -29,5 +29,7 @@ test('fromError', () => {
     expect(err.code).toBe('BASIC_ERROR')
     expect(err.message).toBe('[Error: custom message]')
     expect(BASIC_ERROR.equals(err))
+    expect(err.equals(BASIC_ERROR))
+    expect(err.equals(err))
   }
 })
