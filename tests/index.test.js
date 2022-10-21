@@ -1,3 +1,6 @@
+const { test } = require('uvu')
+const assert = require('uvu/assert')
+
 const createError = require('..')
 
 test('basic', () => {
@@ -6,13 +9,13 @@ test('basic', () => {
   try {
     throw new BASIC_ERROR('str', { json: true })
   } catch (err) {
-    expect(err).toBeInstanceOf(Error)
-    expect(err).toBeInstanceOf(BASIC_ERROR)
-    expect(err.name).toBe('BASIC_ERROR')
-    expect(err.code).toBe('BASIC_ERROR')
-    expect(err.message).toBe('Basic error with args: str {"json":true}')
-    expect(err.unformatMessage).toBe('Basic error with args: %s %j')
-    expect(BASIC_ERROR.equals(err))
+    assert.instance(err, Error)
+    assert.instance(err, BASIC_ERROR)
+    assert.is(err.name, 'BASIC_ERROR')
+    assert.is(err.code, 'BASIC_ERROR')
+    assert.is(err.message, 'Basic error with args: str {"json":true}')
+    assert.is(err.unformatMessage, 'Basic error with args: %s %j')
+    assert.ok(BASIC_ERROR.equals(err))
   }
 })
 
@@ -23,13 +26,15 @@ test('fromError', () => {
   try {
     throw BASIC_ERROR.from(customError)
   } catch (err) {
-    expect(err).toBeInstanceOf(Error)
-    expect(err).toBeInstanceOf(BASIC_ERROR)
-    expect(err.name).toBe('BASIC_ERROR')
-    expect(err.code).toBe('BASIC_ERROR')
-    expect(err.message).toBe('[Error: custom message]')
-    expect(BASIC_ERROR.equals(err))
-    expect(err.equals(BASIC_ERROR))
-    expect(err.equals(err))
+    assert.instance(err, Error)
+    assert.instance(err, BASIC_ERROR)
+    assert.is(err.name, 'BASIC_ERROR')
+    assert.is(err.code, 'BASIC_ERROR')
+    assert.is(err.message, '[Error: custom message]')
+    assert.ok(BASIC_ERROR.equals(err))
+    assert.ok(err.equals(BASIC_ERROR))
+    assert.ok(err.equals(err))
   }
 })
+
+test.run()
