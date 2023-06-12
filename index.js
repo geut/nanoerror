@@ -36,8 +36,10 @@ class Nanoerror extends Error {
     super()
 
     // get information from static props
-    const code = this.constructor.code
-    const unformatMessage = this.constructor.message
+
+    const self = /** @type {typeof Nanoerror} */(this.constructor)
+    const code = self.code
+    const unformatMessage = self.message
 
     /** @type {string} */
     this.message = format(unformatMessage, args)
