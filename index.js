@@ -52,7 +52,16 @@ class Nanoerror extends Error {
     /** @type {string} */
     this.unformatMessage = unformatMessage
 
-    Error.captureStackTrace(this, this.constructor)
+    if ('captureStackTrace' in Error) {
+      Error.captureStackTrace(this, this.constructor)
+    } else {
+      Object.defineProperty(this, 'stack', {
+        enumerable: false,
+        value: Error(this.message).stack,
+        writable: true,
+        configurable: true
+      })
+    }
   }
 
   /**
