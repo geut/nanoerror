@@ -57,7 +57,7 @@ class Nanoerror extends Error {
     } else {
       Object.defineProperty(this, 'stack', {
         enumerable: false,
-        value: Error(this.message).stack,
+        value: (new Error(this.message)).stack,
         writable: true,
         configurable: true
       })
