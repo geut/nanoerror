@@ -54,13 +54,6 @@ class Nanoerror extends Error {
 
     if ('captureStackTrace' in Error) {
       Error.captureStackTrace(this, this.constructor)
-    } else {
-      Object.defineProperty(this, 'stack', {
-        enumerable: false,
-        value: (new Error(this.message)).stack,
-        writable: true,
-        configurable: true
-      })
     }
   }
 
