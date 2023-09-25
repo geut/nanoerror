@@ -14,7 +14,7 @@
     "prepublishOnly": "npm test"
   },
   "dependencies": {
-    "quick-format-unescaped": "^3.0.3"
+    "quick-format-unescaped": "^4.0.4"
   },
   "devDependencies": {
     "standard": "^17.0.0",
